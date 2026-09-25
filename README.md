@@ -64,6 +64,16 @@ Raw CSV → Extract → Transform → Quality Checks → Load → SQL Database
 | dim_shipping | Dimension | Shipping mode and scheduled days |
 | dim_date | Dimension | Date, month, quarter, year, weekday |
 
+### Load
+- Cleaned data loaded into SQLite (`data/processed/supply_chain.db`) as `fact_orders`
+- Full pipeline orchestrated via `etl/run_pipeline.py` (single entry point)
+
+### Data Grain
+The dataset is at **order-item level**, not order level. `Order Id` repeats
+across rows when an order contains multiple products; `Order Item Id` is the
+true unique identifier and is used as the primary key for quality checks.
+
+
 ## 3. Project Setup
 
 ### Prerequisites
@@ -108,3 +118,10 @@ Download the DataCo Smart Supply Chain dataset from
 [Kaggle](https://www.kaggle.com/datasets/shashwatwork/dataco-smart-supply-chain-for-big-data-analysis)
 and place the CSV files in `data/raw/`. Raw files are excluded from version
 control via `.gitignore`.
+
+## 5. How to Run the Pipeline
+```bash
+python -m etl.run_pipeline
+```
+This runs extract, transform, quality checks, and load in sequence, and
+writes logs to `logs/etl.log`.
