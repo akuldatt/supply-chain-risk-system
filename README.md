@@ -38,6 +38,7 @@ Raw CSV → Extract → Transform → Quality Checks → Load → SQL Database
 ### Extract
 - Source: DataCo Smart Supply Chain dataset (CSV)
 - Read using pandas (`encoding='latin-1'`); each run is logged.
+- Implemented in `etl/extract.py` with centralized logging (`logs/etl.log`)
 
 ### Transform
 - Standardized column names to `snake_case`
