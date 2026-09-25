@@ -75,6 +75,32 @@ git clone https://github.com/akuldatt/supply-chain-risk-system.git
 cd supply-chain-risk-system
 pip install -r requirements.txt
 ```
+## 4. Data Understanding
+
+**Dataset:** DataCo Smart Supply Chain, 180,519 orders and 53 columns.
+
+### Key Findings
+| Finding | Detail |
+|---|---|
+| Overall late-delivery rate | 54.83% (57.29% excluding canceled orders) |
+| Delivery status split | Late 98,977 · Advance 41,592 · On time 32,196 · Canceled 7,754 |
+| Average shipping time | 3.50 days actual vs 2.93 days scheduled |
+| Shipping modes | Standard 107,752 · Second 35,216 · First 27,814 · Same Day 9,737 |
+
+### Data Quality Issues
+- `Product Description`: 100% null, dropped
+- `Order Zipcode`: ~86% null, dropped
+- `Customer Lname` (8) and `Customer Zipcode` (3): minor nulls, handled in transform
+- Sensitive fields (email, password) are masked and will be removed
+- Inconsistent labels (e.g. `EE. UU.`) will be standardized
+
+### Data Leakage Risks (for ML)
+`Late_delivery_risk` and `Days for shipping (real)` are only known after
+delivery and are excluded from model features to prevent target leakage.
+
+### Analytical Decision
+Canceled orders are excluded when calculating late-delivery rate, since they
+were never delivered.
 
 ### Dataset
 Download the DataCo Smart Supply Chain dataset from
