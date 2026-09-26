@@ -125,3 +125,13 @@ python -m etl.run_pipeline
 ```
 This runs extract, transform, quality checks, and load in sequence, and
 writes logs to `logs/etl.log`.
+
+### Finding: Shipping Mode Delay (Root Cause)
+Late delivery rate is inversely related to shipping speed promised: First
+Class (100% late), Second Class (79.8%), Same Day (47.9%), Standard Class
+(39.8%). Analysis of actual vs scheduled days reveals the true fulfillment
+time is roughly constant (~4 days for Second/Standard Class, ~2 days for
+First Class) regardless of the shipping mode selected. This indicates the
+delay problem stems from unrealistic delivery promises rather than
+inconsistent operational performance — a promise/SLA design issue, not a
+capacity issue.
