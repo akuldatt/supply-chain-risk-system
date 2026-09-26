@@ -135,3 +135,10 @@ First Class) regardless of the shipping mode selected. This indicates the
 delay problem stems from unrealistic delivery promises rather than
 inconsistent operational performance — a promise/SLA design issue, not a
 capacity issue.
+
+### Finding: Product Category Delay
+Late delivery rate is uniform across the top 15 product categories by volume
+(57%-60%), similar to the region finding. This rules out product-specific
+causes (e.g., specific suppliers or item types) and further confirms that
+**shipping mode / delivery promise design is the dominant root cause**, not
+product or geography.
