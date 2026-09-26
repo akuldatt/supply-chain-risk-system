@@ -126,7 +126,10 @@ python -m etl.run_pipeline
 This runs extract, transform, quality checks, and load in sequence, and
 writes logs to `logs/etl.log`.
 
+## 6. Diagnostic Analysis
+
 ### Finding: Shipping Mode Delay (Root Cause)
+
 Late delivery rate is inversely related to shipping speed promised: First
 Class (100% late), Second Class (79.8%), Same Day (47.9%), Standard Class
 (39.8%). Analysis of actual vs scheduled days reveals the true fulfillment
@@ -137,8 +140,40 @@ inconsistent operational performance — a promise/SLA design issue, not a
 capacity issue.
 
 ### Finding: Product Category Delay
+
 Late delivery rate is uniform across the top 15 product categories by volume
 (57%-60%), similar to the region finding. This rules out product-specific
 causes (e.g., specific suppliers or item types) and further confirms that
 **shipping mode / delivery promise design is the dominant root cause**, not
 product or geography.
+
+### Finding: Region-wise Delay
+
+Late delivery rate is fairly uniform across regions (51%-60%), indicating the
+delay problem is systemic rather than region-specific. This rules out simple
+geography-based fixes and points toward operational factors (shipping mode,
+processing time) as more likely root causes.
+
+### Finding: No Meaningful Time-Based Pattern
+
+Late delivery rate varies only slightly by calendar month (56.7%-58.0%) and
+by weekday (56.6%-57.8%). A year-over-year heatmap shows no consistent
+seasonal pattern — the month with the highest late rate changes every year
+(Sep in 2015, Jun in 2016, Aug in 2017), indicating this variation is random
+rather than a genuine seasonal effect. Weather data, which could explain
+short-term spikes, is not available in this dataset (see Limitations below).
+
+### Diagnostic Conclusion
+
+Across four dimensions tested (region, product category, month, weekday),
+only **shipping mode** shows a strong, consistent relationship with late
+delivery (40% to 100% late rate). This confirms the root cause is structural
+— unrealistic delivery-time promises by shipping mode — rather than
+geographic, seasonal, or product-specific factors.
+
+### Limitation: Weather Data Not Available
+
+This dataset does not include weather information. Seasonal or
+weather-related delay causes (e.g., rain, storms) cannot be tested directly.
+Order volume by month was checked as an indirect proxy for demand-driven
+delays but showed no strong relationship with late-delivery rate.
